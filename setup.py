@@ -8,9 +8,10 @@ with open(os.path.join(here, 'README.md')) as f:
 
 setup(
     name='reshadowcode',
-    version='0.0.1',
+    version='0.0.2',
     description='For Shadow Copy research in Windows',
     long_description=long_description,
+    long_description_content_type='text/markdown',
     url='https://github.com/alicangnll/pyshadow',
     author='Ali Can Gönüllü',
     license='MIT',
