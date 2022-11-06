@@ -17,7 +17,7 @@ for shadowlist in list:
     print("ID : " + shadowlist["id"] + "\nCreation Date : " + shadowlist["creation_time"] + "\nShadow Copy Location : " + shadowlist["shadowcopy"] + "\n")
 #Create a ShadowCopy
 ReShadowCode.VSS_Create()
-#Create a pipe/symlink with ShadowCopy()
+#Create a pipe/symlink with ShadowCopy() (Ex. \\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy<b>id</b>)
 ReShadowCode.VSS_Create_Pipe("C:\\Shadow1", "7")
 #Get file list from ShadowCopy
 '''
