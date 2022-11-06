@@ -1,6 +1,6 @@
 <h2>Python ShadowCopy Class</h2>
 
-<p>Python ShadowCopy Analyzer for Cyber Security Researchers!<br>pip install pyshadow</p>
+<p>Python ShadowCopy Analyzer for Cyber Security Researchers!<br>pip install reshadowcode</p>
 
 <h2>Images</h2>
 <img src="Shadow copy creation process.jpg" />
