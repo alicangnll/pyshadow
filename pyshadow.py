@@ -4,7 +4,7 @@ import win32com.client as client
 import win32com.shell.shell as shell
 from subprocess import call, Popen, PIPE
 
-class PyShadow():
+class ReShadowCode():
     
     def run_as_admin():
         ASADMIN = 'asadmin'
@@ -50,10 +50,10 @@ class PyShadow():
         return ret
 
     def VSS_ListShadows():
-        if(PyShadow.run_as_admin()):
+        if(ReShadowCode.run_as_admin()):
             list_output = Popen(["vssadmin", "list", "shadows"], stdout=PIPE).communicate()[0]
             list_output = list_output.decode("utf-8")
-            return PyShadow.VSSParser(list_output)
+            return ReShadowCode.VSSParser(list_output)
         else:
             return "You dont have any permissions!"
 
@@ -72,14 +72,14 @@ class PyShadow():
         return results.Properties_[1].value
 
     def VSS_Create_Pipe(location, id_and_directory):
-        if(PyShadow.run_as_admin()):
+        if(ReShadowCode.run_as_admin()):
             query = "mklink /D /J " + str(location) + " \\\?\\\GLOBALROOT\\\Device\\\HarddiskVolumeShadowCopy" + id_and_directory + ""
             os.system(query)
         else:
             return "You dont have any permissions!"
 
     def VSS_Get_FileList(directory):
-        if(PyShadow.run_as_admin()):
+        if(ReShadowCode.run_as_admin()):
             listdir = os.listdir(directory)
             return listdir
         else:

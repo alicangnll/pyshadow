@@ -7,7 +7,7 @@ with open(os.path.join(here, 'README.md')) as f:
     long_description = f.read()
 
 setup(
-    name='pyshadow',
+    name='reshadowcode',
     version='0.0.1',
     description='For Shadow Copy research in Windows',
     long_description=long_description,
