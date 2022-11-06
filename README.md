@@ -2,9 +2,6 @@
 
 <p>Python ShadowCopy Analyzer for Cyber Security Researchers!<br>pip install reshadowcode</p>
 
-<h2>Images</h2>
-<img src="Shadow copy creation process.jpg" />
-<img src="Architectural diagram of Volume Shadow Copy Service.jpg" />
 <h2>Example Code</h2>
 
 <pre>
@@ -33,3 +30,8 @@ list = pyshadow.VSS_Get_FileList("C:\\Shadow1\\Users")
 for files in list:
     print(files)
 </pre>
+
+
+<h2>Images</h2>
+<img src="Shadow copy creation process.jpg" />
+<img src="Architectural diagram of Volume Shadow Copy Service.jpg" />
