@@ -1,5 +1,5 @@
 #!/usr/bin/python
-import sys, os, re, ctypes
+import sys, os, re
 import win32com.client as client
 import win32com.shell.shell as shell
 from subprocess import call, Popen, PIPE, check_call
@@ -92,3 +92,4 @@ class ReShadowCode():
             os.mkdir(symlinklocation + "\\" + directoryname)
         else:
             return "You dont have any permissions!"
+
