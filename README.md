@@ -7,7 +7,7 @@
 <img src="Architectural diagram of Volume Shadow Copy Service.jpg" />
 <h2>Example Code</h2>
 
-<code>
+<pre>
 # List all ShadowCopy
 '''
 Example Result
@@ -32,4 +32,4 @@ Shadow Copy Location : \\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy7
 list = pyshadow.VSS_Get_FileList("C:\\Shadow1\\Users")
 for files in list:
     print(files)
-</code>
+</pre>
