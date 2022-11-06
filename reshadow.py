@@ -1,8 +1,8 @@
 #!/usr/bin/python
-import sys, os, re
+import sys, os, re, ctypes
 import win32com.client as client
 import win32com.shell.shell as shell
-from subprocess import call, Popen, PIPE
+from subprocess import call, Popen, PIPE, check_call
 
 class ReShadowCode():
     
@@ -73,8 +73,7 @@ class ReShadowCode():
 
     def VSS_Create_Pipe(location, id_and_directory):
         if(ReShadowCode.run_as_admin()):
-            query = "mklink /D /J " + str(location) + " \\\?\\\GLOBALROOT\\\Device\\\HarddiskVolumeShadowCopy" + id_and_directory + ""
-            os.system(query)
+            call(['mklink', '/D', '/J', str(location), "\\\?\\\GLOBALROOT\\\Device\\\HarddiskVolumeShadowCopy" + id_and_directory + ""], shell=True)
         else:
             return "You dont have any permissions!"
 
@@ -82,5 +81,14 @@ class ReShadowCode():
         if(ReShadowCode.run_as_admin()):
             listdir = os.listdir(directory)
             return listdir
+        else:
+            return "You dont have any permissions!"
+
+    def VSS_GavePermission(path):
+        return check_call(["attrib", "-r", path])
+
+    def VSS_CreateDir_AfterSymlink(symlinklocation, directoryname):
+        if(ReShadowCode.run_as_admin()):
+            os.mkdir(symlinklocation + "\\" + directoryname)
         else:
             return "You dont have any permissions!"
