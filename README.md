@@ -18,7 +18,7 @@ for shadowlist in list:
 #Create a ShadowCopy
 ReShadowCode.VSS_Create()
 #Create a pipe/symlink with ShadowCopy() (Ex. \\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy<b>id</b>)
-ReShadowCode.VSS_Create_Pipe("C:\\Shadow1", "7")
+ReShadowCode.VSS_Create_Pipe("C:\\Shadow1", "id")
 #Get file list from ShadowCopy
 '''
 Example Result
