@@ -8,7 +8,7 @@ with open(os.path.join(here, 'README.md')) as f:
 
 setup(
     name='reshadowcode',
-    version='0.0.2',
+    version='0.0.3',
     description='For Shadow Copy research in Windows',
     long_description=long_description,
     long_description_content_type='text/markdown',
@@ -16,6 +16,6 @@ setup(
     author='Ali Can Gönüllü',
     license='MIT',
     keywords=['Windows', 'VSS', 'win32', 'Shadow', 'Copy'],
-    py_modules=['subprocess', 'pywin32'],
-    install_requires=['pywin32', 're'],
+    py_modules=['subprocess', 'pywin32', 're'],
+    install_requires=['pywin32', 'pyvhd', 're'],
 )

@@ -11,8 +11,11 @@ class ReShadowCode():
         if sys.argv[-1] != ASADMIN:
             script = os.path.abspath(sys.argv[0])
             params = ' '.join([script] + sys.argv[1:] + [ASADMIN])
-            shell.ShellExecuteEx(lpVerb='runas', lpFile=sys.executable, lpParameters=params)
-            ret = True
+            try:
+                shell.ShellExecuteEx(lpVerb='runas', lpFile=sys.executable, lpParameters=params)
+                ret = True
+            except:
+                ret = False
         else:
             ret = False
 
@@ -59,7 +62,7 @@ class ReShadowCode():
 
     def DiskPart_Command(exec):
         p = Popen(["diskpart"], stdin=PIPE, stdout=PIPE)
-        p.stdin.write(exec + "\n")
+        p.stdin.write(b'' + exec + '\n')
         p.stdin.close()
         return p.communicate()[0].decode("utf-8").splitlines()
 
@@ -73,7 +76,19 @@ class ReShadowCode():
 
     def VSS_Create_Pipe(location, id_and_directory):
         if(ReShadowCode.run_as_admin()):
-            call(['mklink', '/D', '/J', str(location), "\\\?\\\GLOBALROOT\\\Device\\\HarddiskVolumeShadowCopy" + id_and_directory + ""], shell=True)
+            try:
+                call(['mklink', '/D', '/J', str(location), "\\\?\\\GLOBALROOT\\\Device\\\HarddiskVolumeShadowCopy" + id_and_directory + ""], shell=True)
+            except:
+                return "An error occured!"
+        else:
+            return "You dont have any permissions!"
+
+    def VSS_Create_PipeForeach(location, id_and_directory):
+        if(ReShadowCode.run_as_admin()):
+            try:
+                call(['mklink', '/D', '/J', str(location), str(id_and_directory)], shell=True)
+            except:
+                return "An error occured!"
         else:
             return "You dont have any permissions!"
 
@@ -89,7 +104,12 @@ class ReShadowCode():
 
     def VSS_CreateDir_AfterSymlink(symlinklocation, directoryname):
         if(ReShadowCode.run_as_admin()):
-            os.mkdir(symlinklocation + "\\" + directoryname)
+            try:
+                os.mkdir(symlinklocation + "\\" + directoryname)
+            except:
+                return "An error occured!"
         else:
             return "You dont have any permissions!"
 
+    def VHD_Create(location, vhdname, size):
+        return ReShadowCode.DiskPart_Command('CREATE VDISK FILE="' + location + vhdname + '" MAXIMUM=' + size + '')
