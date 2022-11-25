@@ -1,4 +1,4 @@
-<h2>Python ShadowCopy Class</h2>
+<img src="PY-removebg-preview-crop.png" />
 
 <p>Python ShadowCopy Analyzer for Cyber Security Researchers!<br>pip install reshadowcode OR pip install -r requirements.txt</p>
 
