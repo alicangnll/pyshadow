@@ -2,6 +2,9 @@
 
 <p>Python ShadowCopy Analyzer for Cyber Security Researchers!<br>pip install reshadowcode OR pip install -r requirements.txt</p>
 
+<h2>Medium Link for Developers</h2>
+<a href="https://alicann.medium.com/pyshadow-shadowcopy-editor-50357b055c4b">Click here</a>
+
 <h2>Example Code</h2>
 
 <pre>
@@ -40,7 +43,7 @@ for files in list:
     print(files)
 </pre>
 
-
 <h2>Images</h2>
+
 <img src="Shadow copy creation process.jpg" />
 <img src="Architectural diagram of Volume Shadow Copy Service.jpg" />
