@@ -1,6 +1,8 @@
 <img src="PY-removebg-preview-crop.png" />
 
-<p>Python ShadowCopy Analyzer for Cyber Security Researchers!<br>pip install reshadowcode OR pip install -r requirements.txt</p>
+<p>Python ShadowCopy Analyzer for Cyber Security Researchers!
+<hr></hr>
+<br>pip install reshadowcode OR pip install -r requirements.txt</p>
 
 <h2>Medium Link for Developers</h2>
 <a href="https://alicann.medium.com/pyshadow-shadowcopy-editor-50357b055c4b">Click here</a>
