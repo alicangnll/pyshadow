@@ -7,7 +7,7 @@
 
 
 ### Installation
-<p>PyPi : <a href="https://pypi.org/project/pyshadowcopy/">PyShadowCopy</a></p>
+<p>PyPi : <a href="https://pypi.org/project/reshadow/">PyShadowCopy</a></p>
 
 ### Example Code
 <pre>

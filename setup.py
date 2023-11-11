@@ -2,7 +2,7 @@ from setuptools import find_packages
 from setuptools import setup
 
 setup(
-    name="pyshadowcopy",
+    name="reshadow",
     version="0.0.21",
     license="GNU General Public License v2.0",
     author="Ali Can Gönüllü",
@@ -15,7 +15,7 @@ setup(
     install_requires=["pywin32"],
     long_description=open("README.md", encoding="utf-8").read(),
     long_description_content_type="text/markdown",
-    py_modules=["pyshadowcopy"],
+    py_modules=["reshadow"],
     classifiers=[
         "Intended Audience :: Developers",
         "Topic :: Software Development :: Libraries :: Python Modules",
