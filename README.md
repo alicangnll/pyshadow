@@ -47,5 +47,5 @@ for files in list:
 
 <h2>Images</h2>
 
-<img src="Shadow copy creation process.jpg" />
-<img src="Architectural diagram of Volume Shadow Copy Service.jpg" />
+<img src="pic/Shadow copy creation process.jpg" />
+<img src="pic/Architectural diagram of Volume Shadow Copy Service.jpg" />
