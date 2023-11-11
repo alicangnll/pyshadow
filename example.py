@@ -1,5 +1,14 @@
-import reshadow
+from reshadow import ReShadowCode
 
-for shadowlist in reshadow.ReShadowCode.VSS_ListShadows():
+# Create a ShadowCopy
+# ReShadowCode.VSS_Create()
+
+# Create a pipe/symlink with ShadowCopy() (Ex. \\?\GLOBALROOT\Device\HarddiskVolumeShadowCopyid)
+# ReShadowCode.VSS_Create_Pipe("C:\\Shadow1", "id")
+
+# List all ShadowCopies
+shadowcopy_list = ReShadowCode.VSS_ListShadows()
+
+for shadowlist in shadowcopy_list:
     print("ID : " + shadowlist["id"] + "\nCreation Date : " + shadowlist["creation_time"] + "\nShadow Copy Location : " + shadowlist["shadowcopy"] + "\n")
-    print(reshadow.ReShadowCode.VSS_Create_PipeForeach("C:\\" + shadowlist["id"].replace("{", "").replace("}", ""), shadowlist["shadowcopy"]))
+    print(ReShadowCode.VSS_Create_PipeForeach("C:\\" + shadowlist["id"].replace("{", "").replace("}", ""), shadowlist["shadowcopy"]))
