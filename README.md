@@ -5,6 +5,13 @@
 ### Medium Link for Developers
 <a href="https://alicann.medium.com/pyshadow-shadowcopy-editor-50357b055c4b">Click here</a>
 
+### Abilities
+<ul>
+<li> Create Pipe / Symlinks to ShadowCopies</li>
+<li> List all ShadowCopies</li>
+<li> Create ShadowCopy</li>
+<li> Delete ShadowCopy</li>
+</ul>
 
 ### Installation
 <p>PyPi : <a href="https://pypi.org/project/reshadow/">PyShadowCopy</a></p>
@@ -47,5 +54,6 @@ for files in list:
 </pre>
 
 ### Images
+<img src="pic/pic1.png" />
 <img src="pic/Shadow copy creation process.jpg" />
 <img src="pic/Architectural diagram of Volume Shadow Copy Service.jpg" />
