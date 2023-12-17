@@ -2,6 +2,9 @@
 
 #### Python ShadowCopy Analyzer for Cyber Security Researchers!
 
+### Disclaimer
+<p>The information provided in this blog post is intended for informational purposes only. It is not intended to encourage or promote any illegal or unethical activities, including hacking, cyberattacks, or any form of unauthorized access to computer systems, networks or data.</p>
+
 ### What is the ShadowCopy
 <p>ShadowCopy is a technology that allows you to create backup snapshots or copies of computer volumes or files, even if they are in use. It is also known as Volume Shadow Copy Service, Volume Snapshot Service or VSS. You can use ShadowCopy to restore lost files, recover from ransomware or cryptolocker attacks, or revert your system to a previous state using a system restore point.
 <br><br>
