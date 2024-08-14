@@ -9,14 +9,12 @@ from src.reshadow import ReShadowCode, TerminalColor
 TerminalColor.__init__()
 shadowcopy_list = ReShadowCode.VSS_ListShadows()
 
-def rescue_file(disk):
+def rescue_file(rescuef, dest, disk):
     try:
         for shadowlist in shadowcopy_list:
             print(ReShadowCode.VSS_Create_PipeForeach(disk + ":\\" + shadowlist["id"], shadowlist["shadowcopy"]))
             # Rescue file from ShadowCopy
-            rescue_file = input("Directory of the file to be recovered : ")
-            dest = input("The directory to which the recovered files will be copied : ")
-            ReShadowCode.VSS_CopyFile(rescue_file, dest, shadowlist["id"])
+            ReShadowCode.VSS_CopyFile(rescuef, dest, shadowlist["id"])
             print("File recovered successfully")
     except Exception as e:
         print(f"Error: {e}")
@@ -57,7 +55,9 @@ def main():
         if len(disk) >= 2:
             return main()
         else:
-            rescue_file(disk.upper())
+            rescuef = input("Directory of the file to be recovered : ")
+            dest = input("The directory to which the recovered files will be copied : ")
+            rescue_file(rescuef, dest, disk.upper())
     elif choice == 2:
         disk = input("Write Windows Disk Drive (Example : C, D, E) : ")
         if len(disk) >= 2:
