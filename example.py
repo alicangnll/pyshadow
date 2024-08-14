@@ -46,7 +46,7 @@ def main():
     print("=============================================================")
     print(" pyShadow - The ShadowCopy Extractor / File Rescue Tool\n Version 1.0.0\n Copyright (c) 2022, Reshadow")
     print("=============================================================")
-    print("1. Rescue File from ShadowCopy")
+    print("1. Rescue File from ShadowCopy (DEMO)")
     print("2. Create Pipe / Symlink for ShadowCopy")
     print("3. List ShadowCopy")
     print("4. Create VSS")
