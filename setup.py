@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name="reshadow",
-    version="0.0.21",
+    version="0.0.22",
     license="GNU General Public License v2.0",
     author="Ali Can Gönüllü",
     author_email="alicangonullu@yahoo.com",

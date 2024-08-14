@@ -1,30 +1,26 @@
 #!/usr/bin/python
-import sys, os, re
+import os, shutil
 import win32com.client as client
 import win32com.shell.shell as shell
+from ctypes import windll
 from subprocess import call, Popen, PIPE, check_call
 
-class ReShadowCode():
-    
-    def run_as_admin():
-        ASADMIN = 'asadmin'
-        if sys.argv[-1] != ASADMIN:
-            script = os.path.abspath(sys.argv[0])
-            params = ' '.join([script] + sys.argv[1:] + [ASADMIN])
-            try:
-                shell.ShellExecuteEx(lpVerb='runas', lpFile=sys.executable, lpParameters=params)
-                ret = True
-            except:
-                ret = False
-        else:
-            ret = False
+class TerminalColor():
+    def __init__():
+        os.system("cls")
+        os.system("color a")
 
+class ReShadowCode():
+    def run_as_admin():
+        try:
+            ret = os.getuid() == 0
+        except AttributeError:
+            ret = windll.shell32.IsUserAnAdmin() != 0
         return ret
 
     def VSSParser(vssadmin_out):
         ret = []
         current = None
-        fix1 = re.compile("Contained .* copies at ")
         for line in vssadmin_out.splitlines():
             if line == "":
                 if current:
@@ -58,47 +54,62 @@ class ReShadowCode():
             list_output = list_output.decode("utf-8")
             return ReShadowCode.VSSParser(list_output)
         else:
-            return "You dont have any permissions!"
+            raise PermissionError("You dont have permission!")
 
     def DiskPart_Command(exec):
-        p = Popen(["diskpart"], stdin=PIPE, stdout=PIPE)
-        p.stdin.write(b'' + exec + '\n')
-        p.stdin.close()
-        return p.communicate()[0].decode("utf-8").splitlines()
+        try:
+            p = Popen(["diskpart"], stdin=PIPE, stdout=PIPE)
+            p.stdin.write(b'' + exec + '\n')
+            p.stdin.close()
+            return p.communicate()[0].decode("utf-8").splitlines()
+        except Exception as e:
+            return str(e)
 
     def VSS_Create():
-        wmi = client.GetObject("winmgmts:\\\\.\\root\\cimv2:Win32_ShadowCopy")
-        createmethod = wmi.Methods_("Create")
-        createparams = createmethod.InParameters
-        createparams.Properties_[1].value="c:\\"
-        results = wmi.ExecMethod_("Create", createparams)
-        return results.Properties_[1].value
+        try:
+            wmi = client.GetObject("winmgmts:\\\\.\\root\\cimv2:Win32_ShadowCopy")
+            createmethod = wmi.Methods_("Create")
+            createparams = createmethod.InParameters
+            createparams.Properties_[1].value="c:\\"
+            results = wmi.ExecMethod_("Create", createparams)
+            return results.Properties_[1].value
+        except Exception as e:
+            return str(e)
 
     def VSS_Create_Pipe(location, id_and_directory):
         if(ReShadowCode.run_as_admin()):
             try:
-                call(['mklink', '/D', '/J', str(location), "\\\?\\\GLOBALROOT\\\Device\\\HarddiskVolumeShadowCopy" + id_and_directory + ""], shell=True)
+                if os.path.isfile(str(location)) or os.path.isdir(str(location)):
+                    os.remove(str(location))
+                call(['mklink', '/D', '/J', str(location), "\\\?\\\GLOBALROOT\\\Device\\\HarddiskVolumeShadowCopy" + id_and_directory], shell=True)
             except:
-                return "An error occured!"
+                raise Exception("An error occured!")
         else:
-            return "You dont have any permissions!"
+            raise PermissionError("You dont have permission!")
 
     def VSS_Create_PipeForeach(location, id_and_directory):
         if(ReShadowCode.run_as_admin()):
             try:
-                call(['mklink', '/D', '/J', str(location), str(id_and_directory)], shell=True)
+                if os.path.isfile(str(location)) or os.path.isdir(str(location)):
+                    os.remove(str(location))
+                call(['mklink', '/D', '/J', str(location), str(id_and_directory).replace("{", "").replace("}", "")], shell=True)
             except:
-                return "An error occured!"
+                raise Exception("An error occured!")
         else:
-            return "You dont have any permissions!"
+            raise PermissionError("You dont have permission!")
 
     def VSS_Get_FileList(directory):
         if(ReShadowCode.run_as_admin()):
-            listdir = os.listdir(directory)
-            return listdir
+            return os.listdir(directory)
         else:
-            return "You dont have any permissions!"
-
+            raise PermissionError("You dont have permission!")
+        
+    def VSS_CopyFile(src, dest, shadowid):
+        if(ReShadowCode.run_as_admin()):
+            shutil.copy("\\\?\\GLOBALROOT\\Device\\HarddiskVolumeShadowCopy" + str(shadowid).replace("{", "").replace("}", "") + "\\" + src, dest)
+        else:
+            raise PermissionError("You dont have permission!")
+        
     def VSS_GavePermission(path):
         return check_call(["attrib", "-r", path])
 
@@ -109,7 +120,7 @@ class ReShadowCode():
             except:
                 return "An error occured!"
         else:
-            return "You dont have any permissions!"
+            raise PermissionError("You dont have permission!")
 
     def VHD_Create(location, vhdname, size):
         return ReShadowCode.DiskPart_Command('CREATE VDISK FILE="' + location + vhdname + '" MAXIMUM=' + size + '')
