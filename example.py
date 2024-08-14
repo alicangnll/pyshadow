@@ -14,7 +14,7 @@ def rescue_file(disk):
         for shadowlist in shadowcopy_list:
             print(ReShadowCode.VSS_Create_PipeForeach(disk + ":\\" + shadowlist["id"], shadowlist["shadowcopy"]))
             # Rescue file from ShadowCopy
-            rescue_file = input(TerminalColor.OK + "Directory of the file to be recovered : ")
+            rescue_file = input("Directory of the file to be recovered : ")
             dest = input("The directory to which the recovered files will be copied : ")
             ReShadowCode.VSS_CopyFile(rescue_file, dest, shadowlist["id"])
             print("File recovered successfully")
