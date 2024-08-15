@@ -112,6 +112,12 @@ class ReShadowCode():
         
     def VSS_GavePermission(path):
         return check_call(["attrib", "-r", path])
+    
+    def VSS_RemoveSymlink(src):
+        try:
+            os.remove(src)
+        except:
+            return False
 
     def VSS_CreateDir_AfterSymlink(symlinklocation, directoryname):
         if(ReShadowCode.run_as_admin()):

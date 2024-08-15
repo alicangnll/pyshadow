@@ -11,8 +11,10 @@ shadowcopy_list = ReShadowCode.VSS_ListShadows()
 
 def rescue_file(src, dst, disk):
     try:
+        print("=============================================================")
         for shadowlist in shadowcopy_list:
-            print("ID : " + str(shadowlist["id"]).replace("{", "").replace("}", "") + "\nDate : " + shadowlist["creation_time"])
+            print("ID : " + str(shadowlist["id"]).replace("{", "").replace("}", "") + "\nDate : " + shadowlist["creation_time"] + "\n")
+        print("=============================================================")
         id = str(input("Recover ID : "))
         if id is None or id == "":
             return "ERROR : ID is empty"
@@ -20,6 +22,7 @@ def rescue_file(src, dst, disk):
             print(ReShadowCode.VSS_Create_PipeForeach(disk + ":\\" + id, shadowlist["shadowcopy"]))
             # Rescue file from ShadowCopy
             ReShadowCode.VSS_CopyFile(disk + ":\\" + id + "\\" + src, dst)
+            ReShadowCode.VSS_RemoveSymlink(disk + ":\\" + id)
             print("File recovered successfully")
     except Exception as e:
         print(f"Error: {e}")
@@ -47,9 +50,9 @@ def create_vss():
 
 def main():
     print("=============================================================")
-    print(" pyShadow - The ShadowCopy Extractor / File Rescue Tool\n Version 1.0.0\n Copyright (c) 2022, Reshadow")
+    print(" pyShadow - The ShadowCopy Extractor / File Rescue Tool\n Version 1.0.0\n Copyright (c) 2024, Reshadow")
     print("=============================================================")
-    print("1. Rescue File from ShadowCopy (DEMO)")
+    print("1. Rescue File from ShadowCopy (Testing)")
     print("2. Create Pipe / Symlink for ShadowCopy")
     print("3. List ShadowCopy")
     print("4. Create VSS")

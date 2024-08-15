@@ -71,6 +71,6 @@ for files in list:
 </pre>
 
 ### Images
-<img src="pic/pic1.png" />
+<img src="pic/pic2.png" />
 <img src="pic/Shadow copy creation process.jpg" />
 <img src="pic/Architectural diagram of Volume Shadow Copy Service.jpg" />
