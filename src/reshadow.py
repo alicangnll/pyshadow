@@ -81,7 +81,7 @@ class ReShadowCode():
             try:
                 if os.path.isfile(str(location)) or os.path.isdir(str(location)):
                     os.remove(str(location))
-                call(['mklink', '/D', '/J', str(location), "\\\?\\\GLOBALROOT\\\Device\\\HarddiskVolumeShadowCopy" + id_and_directory], shell=True)
+                call(['mklink', '/D', '/J', str(location), "\\\?\\\GLOBALROOT\\\Device\\\HarddiskVolumeShadowCopy" + str(id_and_directory).replace("{", "").replace("}", "")], shell=True)
             except:
                 raise Exception("An error occured!")
         else:
@@ -104,9 +104,9 @@ class ReShadowCode():
         else:
             raise PermissionError("You dont have permission!")
         
-    def VSS_CopyFile(src, dest, shadowid):
+    def VSS_CopyFile(src, dest):
         if(ReShadowCode.run_as_admin()):
-            shutil.copy("\\\?\\GLOBALROOT\\Device\\HarddiskVolumeShadowCopy" + str(shadowid).replace("{", "").replace("}", "") + "\\" + src, dest)
+            shutil.copy(src, dest)
         else:
             raise PermissionError("You dont have permission!")
         

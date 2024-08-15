@@ -9,12 +9,17 @@ from src.reshadow import ReShadowCode, TerminalColor
 TerminalColor.__init__()
 shadowcopy_list = ReShadowCode.VSS_ListShadows()
 
-def rescue_file(rescuef, dest, disk):
+def rescue_file(src, dst, disk):
     try:
         for shadowlist in shadowcopy_list:
-            print(ReShadowCode.VSS_Create_PipeForeach(disk + ":\\" + shadowlist["id"], shadowlist["shadowcopy"]))
+            print("ID : " + str(shadowlist["id"]).replace("{", "").replace("}", "") + "\nDate : " + shadowlist["creation_time"])
+        id = str(input("Recover ID : "))
+        if id is None or id == "":
+            return "ERROR : ID is empty"
+        else:
+            print(ReShadowCode.VSS_Create_PipeForeach(disk + ":\\" + id, shadowlist["shadowcopy"]))
             # Rescue file from ShadowCopy
-            ReShadowCode.VSS_CopyFile(rescuef, dest, shadowlist["id"])
+            ReShadowCode.VSS_CopyFile(disk + ":\\" + id + "\\" + src, dst)
             print("File recovered successfully")
     except Exception as e:
         print(f"Error: {e}")
@@ -55,9 +60,9 @@ def main():
         if len(disk) >= 2:
             return main()
         else:
-            rescuef = input("Directory of the file to be recovered : ")
+            src = input("Directory of the file to be recovered : ")
             dest = input("The directory to which the recovered files will be copied : ")
-            rescue_file(rescuef, dest, disk.upper())
+            rescue_file(src, dest, disk.upper())
     elif choice == 2:
         disk = input("Write Windows Disk Drive (Example : C, D, E) : ")
         if len(disk) >= 2:
