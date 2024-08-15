@@ -15,6 +15,7 @@ ShadowCopy is available in Windows 7, 8 and 10, but you need to enable it first.
 
 ### Abilities
 <ul>
+<li> Recover deleted files from ShadowCopies</li>
 <li> Create Pipe / Symlinks to ShadowCopies</li>
 <li> List all ShadowCopies</li>
 <li> Create ShadowCopy</li>
