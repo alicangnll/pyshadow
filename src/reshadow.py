@@ -1,4 +1,3 @@
-#!/usr/bin/python
 import os, shutil
 import win32com.client as client
 import win32com.shell.shell as shell
@@ -106,7 +105,10 @@ class ReShadowCode():
         
     def VSS_CopyFile(src, dest):
         if(ReShadowCode.run_as_admin()):
-            shutil.copy(src, dest)
+            if os.path.isfile(str(src)) or os.path.isdir(str(src)):
+                shutil.copy(src, dest)
+            else:
+                raise FileNotFoundError("The file or directory does not exist!")
         else:
             raise PermissionError("You dont have permission!")
         
