@@ -1,86 +1,93 @@
-
 #!/usr/bin/python
 # =======================
-# pyShadow - Example Codes
+# pyShadow - Example Usage
 # =======================
 
 from src.reshadow import ReShadowCode, TerminalColor
 
-# Global variables
 TerminalColor.__init__()
-shadowcopy_list = ReShadowCode.VSS_ListShadows()
 
-def rescue_file(src, dst, disk):
-    try:
-        print("=============================================================")
-        for shadowlist in shadowcopy_list:
-            print("ID : " + str(shadowlist["id"]).replace("{", "").replace("}", "") + "\nDate : " + shadowlist["creation_time"] + "\n")
-        print("=============================================================")
-        id = str(input("Recover ID : "))
-        if id is None or id == "":
-            return "ERROR : ID is empty"
-        else:
-            print(ReShadowCode.VSS_Create_PipeForeach(disk + ":\\" + id, shadowlist["shadowcopy"]))
-            # Rescue file from ShadowCopy
-            ReShadowCode.VSS_CopyFile(disk + ":\\" + id + "\\" + src, dst)
-            ReShadowCode.VSS_RemoveSymlink(disk + ":\\" + id)
-            print("File recovered successfully")
-    except Exception as e:
-        print(f"Error: {e}")
+def list_shadowcopies():
+    shadows = ReShadowCode.VSS_ListShadows()
+    for shadow in shadows:
+        print(f"ID: {shadow['id'].strip('{}')}\nCreated: {shadow['creation_time']}\nLocation: {shadow['shadowcopy']}\n{'='*60}")
+    return shadows
 
-def create_pipe(disk):
-    try:
-        for shadowlist in shadowcopy_list:
-            print("ID : " + shadowlist["id"] + "\nCreation Date : " + shadowlist["creation_time"] + "\nShadow Copy Location : " + shadowlist["shadowcopy"] + "\n")
-            ReShadowCode.VSS_Create_PipeForeach(disk + ":\\" + shadowlist["id"].replace("{", "").replace("}", ""), shadowlist["shadowcopy"])
-    except Exception as e:
-        print(f"Error: {e}")
+def rescue_file():
+    shadows = list_shadowcopies()
+    shadow_id = input("Enter ShadowCopy ID to recover from: ").strip()
+    if not shadow_id:
+        print("❌ ERROR: ShadowCopy ID is required.")
+        return
 
-def list_shadowcopy():
+    src_path = input("Enter relative path to the file inside the ShadowCopy: ").strip()
+    dst_path = input("Enter full destination path to save the recovered file: ").strip()
+    drive_letter = input("Enter drive letter (e.g., C, D): ").strip().upper()
+
+    mount_path = f"{drive_letter}:\\{shadow_id}"
+    shadow = next((s for s in shadows if shadow_id in s["id"]), None)
+
+    if not shadow:
+        print("❌ ERROR: No matching ShadowCopy found.")
+        return
+
     try:
-        for shadowlist in shadowcopy_list:
-            print("ID : " + shadowlist["id"] + "\nCreation Date : " + shadowlist["creation_time"] + "\nShadow Copy Location : " + shadowlist["shadowcopy"] + "\n")
+        print(f"🔄 Mounting {shadow_id}...")
+        ReShadowCode.VSS_Create_PipeForeach(mount_path, shadow["shadowcopy"])
+        ReShadowCode.VSS_CopyFile(f"{mount_path}\\{src_path}", dst_path)
+        print("✅ File recovered successfully.")
     except Exception as e:
-        print(f"Error: {e}")
+        print(f"❌ Recovery failed: {e}")
+    finally:
+        ReShadowCode.VSS_RemoveSymlink(mount_path)
+
+def create_pipes():
+    drive = input("Enter drive letter (e.g., C, D): ").strip().upper()
+    shadows = ReShadowCode.VSS_ListShadows()
+    for shadow in shadows:
+        mount_path = f"{drive}:\\{shadow['id'].strip('{}')}"
+        print(f"🔗 Creating pipe at {mount_path}")
+        ReShadowCode.VSS_Create_PipeForeach(mount_path, shadow["shadowcopy"])
 
 def create_vss():
     try:
         ReShadowCode.VSS_Create()
+        print("✅ New ShadowCopy created.")
     except Exception as e:
-        print(f"Error: {e}")
+        print(f"❌ Failed to create VSS: {e}")
 
 def main():
-    print("=============================================================")
-    print(" pyShadow - The ShadowCopy Extractor / File Rescue Tool\n Version 1.0.0\n Copyright (c) 2024, Reshadow")
-    print("=============================================================")
-    print("1. Rescue File from ShadowCopy (Testing)")
-    print("2. Create Pipe / Symlink for ShadowCopy")
-    print("3. List ShadowCopy")
-    print("4. Create VSS")
-    print("5. Exit")
-    choice = int(input("Enter your choice : "))
-    if choice == 1:
-        disk = input("Write Windows Disk Drive (Example : C, D, E) : ")
-        if len(disk) >= 2:
-            return main()
-        else:
-            src = input("Directory of the file to be recovered : ")
-            dest = input("The directory to which the recovered files will be copied : ")
-            rescue_file(src, dest, disk.upper())
-    elif choice == 2:
-        disk = input("Write Windows Disk Drive (Example : C, D, E) : ")
-        if len(disk) >= 2:
-            return main()
-        else:
-            create_pipe(disk.upper())
-    elif choice == 3:
-        list_shadowcopy()
-    elif choice == 4:
-        create_vss()
-    elif choice == 5:
-        exit()
-    else:
-        return main()
-    
-if __name__ == '__main__':
+    menu = """
+=============================================================
+ pyShadow - The ShadowCopy Extractor / File Rescue Tool
+ Version 1.0.0 | (c) 2024, Reshadow
+=============================================================
+ 1. Rescue File from ShadowCopy
+ 2. Create Pipe / Symlink for ShadowCopy
+ 3. List ShadowCopies
+ 4. Create VSS Snapshot
+ 5. Exit
+=============================================================
+"""
+    while True:
+        print(menu)
+        try:
+            choice = int(input("Select an option (1-5): ").strip())
+            if choice == 1:
+                rescue_file()
+            elif choice == 2:
+                create_pipes()
+            elif choice == 3:
+                list_shadowcopies()
+            elif choice == 4:
+                create_vss()
+            elif choice == 5:
+                print("👋 Exiting.")
+                break
+            else:
+                print("❗ Invalid option. Please select 1-5.")
+        except ValueError:
+            print("❗ Please enter a number.")
+
+if __name__ == "__main__":
     main()
