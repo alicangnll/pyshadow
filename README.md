@@ -1,6 +1,6 @@
 <img src="pic/PY-removebg-preview-crop.png" />
 
-# PyShadow — Python ShadowCopy Analyzer 🛡️
+# PyShadow — Python ShadowCopy Analyzer for Forensic and Data Rescue 🛡️
 
 **PyShadow** is a powerful Windows-only Python toolkit designed for cybersecurity researchers and forensic analysts. It interacts with Microsoft Volume Shadow Copy Service (VSS) to list, create, mount, and extract files from Shadow Copies—ideal for incident response, ransomware recovery, and forensic investigations.
 
